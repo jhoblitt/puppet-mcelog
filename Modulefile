@@ -1,0 +1,10 @@
+name    'jhoblitt-mcelog'
+version '0.0.1'
+
+author 'Joshua Hoblitt <jhoblitt@cpan.org>'
+license 'Apache'
+project_page 'https://github.com/jhoblitt/puppet-mcelog'
+source 'https://github.com/jhoblitt/puppet-mcelog.git'
+summary 'module skeleton'
+description 'module skeleton'
+dependency 'puppetlabs/stdlib', '>= 3.0.0'
