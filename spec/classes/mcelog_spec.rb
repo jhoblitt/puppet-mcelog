@@ -8,24 +8,54 @@ describe 'mcelog', :type => :class do
       :osfamily     => 'RedHat',
     }}
 
-    it { should contain_package('mcelog').with_ensure('present') }
-    it do
-      should contain_file('/etc/mcelog/mcelog.conf').with({
-        :ensure => 'file',
-        :owner  => 'root',
-        :group  => 'root',
-        :mode   => '0644',
-      })
-    end
-    it do
-      should contain_service('mcelog').with({
-        :ensure     => 'running',
-        :name       => 'mcelogd',
-        :hasstatus  => true,
-        :hasrestart => true,
-        :enable     => true,
-      })
-    end
+    context 'EL5.x' do
+      before { facts[:operatingsystemmajrelease] = '5' }
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :ensure => 'file',
+          :path   => '/etc/mcelog.conf',
+          :owner  => 'root',
+          :group  => 'root',
+          :mode   => '0644',
+        })
+      end
+      it { should_not contain_service('mcelog') }
+    end # EL5.x
+
+    context 'EL6.x' do
+      before { facts[:operatingsystemmajrelease] = '6' }
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :ensure => 'file',
+          :path   => '/etc/mcelog/mcelog.conf',
+          :owner  => 'root',
+          :group  => 'root',
+          :mode   => '0644',
+        })
+      end
+      it do
+        should contain_service('mcelog').with({
+          :ensure     => 'running',
+          :name       => 'mcelogd',
+          :hasstatus  => true,
+          :hasrestart => true,
+          :enable     => true,
+        })
+      end
+    end # EL6.x
+
+    context 'unsupport operatingsystemmajrelease' do
+      before { facts[:operatingsystemmajrelease] = '4' }
+
+      it 'should fail' do
+        expect { should contain_class('mcelog::params') }.
+          to raise_error(Puppet::Error, /not supported on operatingsystemmajrelease: 4/)
+      end
+    end # EL4.x
   end # osfamily RedHat
 
   context 'unsupported architecture' do

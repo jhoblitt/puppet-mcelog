@@ -4,19 +4,23 @@ class mcelog {
   package { $::mcelog::params::package_name:
     ensure => present,
   } ->
-  file { $::mcelog::params::config_file_path:
+  file { 'mcelog.conf':
     ensure  => 'file',
+    path    => $::mcelog::params::config_file_path,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => template('mcelog/mcelog.conf.erb'),
-    notify  => Class['mcelog::service'],
-  } ->
-  service { 'mcelog':
-    ensure     => running,
-    name       => $::mcelog::params::service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    enable     => true,
+  }
+
+  if $mcelog::params::service_manage {
+    service { 'mcelog':
+      ensure     => running,
+      name       => $::mcelog::params::service_name,
+      hasstatus  => true,
+      hasrestart => true,
+      enable     => true,
+      subscribe  => File['mcelog.conf'],
+    }
   }
 }

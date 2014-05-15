@@ -1,8 +1,8 @@
 class mcelog::params {
-  $package_name     = 'mcelog'
-  $config_file_path = '/etc/mcelog/mcelog.conf'
-  $service_name     = 'mcelogd'
+  $package_name = 'mcelog'
+  $service_name = 'mcelogd'
 
+  # MCE is only supported on x86_64
   case $::architecture {
     'x86_64': {}
     default: {
@@ -10,7 +10,21 @@ class mcelog::params {
     }
   }
   case $::osfamily {
-    'redhat': {}
+    'redhat': {
+      case $::operatingsystemmajrelease {
+        5: {
+          $config_file_path = '/etc/mcelog.conf'
+          $service_manage   = false
+        }
+        6: {
+          $config_file_path = '/etc/mcelog/mcelog.conf'
+          $service_manage   = true
+        }
+        default: {
+          fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
+        }
+      }
+    }
     default: {
       fail("Module ${module_name} is not supported on osfamily: ${::osfamily}")
     }
