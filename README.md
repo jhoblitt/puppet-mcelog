@@ -1,5 +1,5 @@
 Puppet mcelog Module
-=========================
+====================
 
 [![Build Status](https://travis-ci.org/jhoblitt/puppet-mcelog.png)](https://travis-ci.org/jhoblitt/puppet-mcelog)
 
@@ -17,6 +17,8 @@ Puppet mcelog Module
 
 Overview
 --------
+
+Manages the `mcelog` utility for x86-64 CPU Machine Check Exception data
 
 
 Description
