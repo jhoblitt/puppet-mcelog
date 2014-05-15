@@ -1,8 +1,10 @@
 class mcelog {
-  package { 'mcelog':
+  include mcelog::params
+
+  package { $::mcelog::params::package_name:
     ensure => present,
   } ->
-  file { '/etc/mcelog/mcelog.conf':
+  file { $::mcelog::params::config_file_path:
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
@@ -10,10 +12,11 @@ class mcelog {
     content => template('mcelog/mcelog.conf.erb'),
     notify  => Class['mcelog::service'],
   } ->
-  service { 'mcelogd':
-    ensure      => running,
-    hasstatus   => true,
-    hasrestart  => true,
-    enable      => true,
+  service { 'mcelog':
+    ensure     => running,
+    name       => $::mcelog::params::service_name,
+    hasstatus  => true,
+    hasrestart => true,
+    enable     => true,
   }
 }
