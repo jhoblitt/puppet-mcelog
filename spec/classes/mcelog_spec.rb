@@ -14,11 +14,12 @@ describe 'mcelog', :type => :class do
       it { should contain_package('mcelog').with_ensure('present') }
       it do
         should contain_file('mcelog.conf').with({
-          :ensure => 'file',
-          :path   => '/etc/mcelog.conf',
-          :owner  => 'root',
-          :group  => 'root',
-          :mode   => '0644',
+          :ensure  => 'file',
+          :path    => '/etc/mcelog.conf',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :content => /^daemon = yes$/,
         })
       end
       it { should_not contain_service('mcelog') }
@@ -30,11 +31,12 @@ describe 'mcelog', :type => :class do
       it { should contain_package('mcelog').with_ensure('present') }
       it do
         should contain_file('mcelog.conf').with({
-          :ensure => 'file',
-          :path   => '/etc/mcelog/mcelog.conf',
-          :owner  => 'root',
-          :group  => 'root',
-          :mode   => '0644',
+          :ensure  => 'file',
+          :path    => '/etc/mcelog/mcelog.conf',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :content => /^daemon = yes$/,
         })
       end
       it do
@@ -46,6 +48,41 @@ describe 'mcelog', :type => :class do
           :enable     => true,
         })
       end
+
+      context 'config_file_template =>' do
+        context 'mcelog/mcelog.conf.erb' do
+          let(:params) {{ :config_file_template => 'mcelog/mcelog.conf.erb' }}
+
+          it do
+            should contain_file('mcelog.conf').with({
+              :ensure  => 'file',
+              :path    => '/etc/mcelog/mcelog.conf',
+              :owner   => 'root',
+              :group   => 'root',
+              :mode    => '0644',
+              :content => /^daemon = yes$/,
+            })
+          end
+        end # mcelog/mcelog.conf.erb
+
+        context 'dne/dne.erb' do
+          let(:params) {{ :config_file_template => 'dne/dne.erb' }}
+
+          it 'should fail' do
+            expect { should contain_class('mcelog::params') }.
+              to raise_error(Puppet::Error, /Could not find template 'dne\/dne.erb'/)
+          end
+        end # dne/dne.erb
+
+        context '[]' do
+          let(:params) {{ :config_file_template => [] }}
+
+          it 'should fail' do
+            expect { should contain_class('mcelog::params') }.
+              to raise_error(Puppet::Error, /is not a string/)
+          end
+        end # []
+      end # config_file_template =>
     end # EL6.x
 
     context 'unsupport operatingsystemmajrelease' do

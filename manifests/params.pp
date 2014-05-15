@@ -1,6 +1,7 @@
 class mcelog::params {
-  $package_name = 'mcelog'
-  $service_name = 'mcelogd'
+  $package_name         = 'mcelog'
+  $service_name         = 'mcelogd'
+  $config_file_template = 'mcelog/mcelog.conf.erb'
 
   # MCE is only supported on x86_64
   case $::architecture {

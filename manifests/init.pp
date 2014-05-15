@@ -1,5 +1,7 @@
-class mcelog {
-  include mcelog::params
+class mcelog (
+  $config_file_template = $::mcelog::params::config_file_template,
+) inherits mcelog::params {
+  validate_string($config_file_template)
 
   package { $::mcelog::params::package_name:
     ensure => present,
@@ -10,7 +12,7 @@ class mcelog {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('mcelog/mcelog.conf.erb'),
+    content => template($config_file_template),
   }
 
   if $mcelog::params::service_manage {
