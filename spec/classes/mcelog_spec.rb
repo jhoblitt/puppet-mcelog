@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'mcelog', :type => :class do
 
   context 'osfamily RedHat' do
-    let(:facts) {{ :osfamily => 'RedHat' }}
+    let(:facts) {{
+      :architecture => 'x86_64',
+      :osfamily     => 'RedHat',
+    }}
 
     it { should contain_package('mcelog').with_ensure('present') }
     it do
@@ -25,17 +28,31 @@ describe 'mcelog', :type => :class do
     end
   end # osfamily RedHat
 
-  context 'unsupported osfamily' do
+  context 'unsupported architecture' do
     let :facts do
       {
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Solaris',
+        :architecture => 'i386',
+        :osfamily     => 'RedHat',
       }
     end
 
     it 'should fail' do
-      expect { should contain_class('sysstat::params') }.
-        to raise_error(Puppet::Error, /not supported on Solaris/)
+      expect { should contain_class('mcelog::params') }.
+        to raise_error(Puppet::Error, /not supported on architecture: i386/)
+    end
+  end # unsupported architecture
+
+  context 'unsupported osfamily' do
+    let :facts do
+      {
+        :architecture => 'x86_64',
+        :osfamily     => 'Solaris',
+      }
+    end
+
+    it 'should fail' do
+      expect { should contain_class('mcelog::params') }.
+        to raise_error(Puppet::Error, /not supported on osfamily: Solaris/)
     end
   end # unsupported osfamily
 end
