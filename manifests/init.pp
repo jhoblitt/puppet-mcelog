@@ -11,10 +11,10 @@ class mcelog::install {
 class mcelog::config {
 
   file { '/etc/mcelog/mcelog.conf':
+    ensure  => 'file',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    ensure  => present,
     content => template('mcelog/mcelog.conf.erb'),
     require => Class['mcelog::install'],
     notify  => Class['mcelog::service'],
