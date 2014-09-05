@@ -1,3 +1,4 @@
+# mcelog class
 class mcelog (
   $config_file_template = $::mcelog::params::config_file_template,
 ) inherits mcelog::params {
