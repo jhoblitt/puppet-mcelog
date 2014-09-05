@@ -1,6 +1,16 @@
+# mcelog class
 class mcelog (
-  $config_file_template = $::mcelog::params::config_file_template,
-) inherits mcelog::params {
+  $cfg_file_template = undef
+) {
+
+  include ::mcelog::params
+
+  if $cfg_file_template == undef {
+    $config_file_template = $::mcelog::params::config_file_template
+  } else {
+    $config_file_template = $cfg_file_template
+  }
+
   validate_string($config_file_template)
 
   package { $::mcelog::params::package_name:
