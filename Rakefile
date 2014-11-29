@@ -10,6 +10,11 @@ PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{
 #PuppetLint.configuration.send('disable_variable_scope')
 PuppetLint.configuration.ignore_paths = ['pkg/**/*.pp', 'spec/**/*.pp', 'tests/**/*.pp']
 
+PuppetLint::RakeTask.new :lint do |config|
+  config.pattern          = 'manifests/**/*.pp'
+  config.fail_on_warnings = true
+end
+
 task :default => [
   :syntax,
   :lint,
