@@ -6,7 +6,7 @@ class mcelog::params {
 
   # MCE is only supported on x86_64
   if $::architecture != 'x86_64' {
-    fail("Module ${module_name} not supported on: ${::architecture}")
+    fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
   case $::osfamily {
     'redhat': {
@@ -20,8 +20,7 @@ class mcelog::params {
           $service_manage   = true
         }
         default: {
-          fail("Module ${module_name} is not supported on
-               operatingsystemmajrelease: ${::operatingsystemmajrelease}")
+          fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
         }
       }
     }
