@@ -85,6 +85,75 @@ describe 'mcelog', :type => :class do
       end # config_file_template =>
     end # EL6.x
 
+    context 'EL7.x' do
+      before { facts[:operatingsystemmajrelease] = '7' }
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :ensure  => 'file',
+          :path    => '/etc/mcelog/mcelog.conf',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :content => /^daemon = yes$/,
+        })
+      end
+      it do
+        should contain_file('mcelog.service').with({
+          :ensure  => 'file',
+          :path    => '/usr/lib/systemd/system/mcelog.service',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+        })
+      end
+      it do
+        should contain_service('mcelog').with({
+          :ensure     => 'running',
+          :name       => 'mcelog',
+          :hasstatus  => true,
+          :hasrestart => true,
+          :enable     => true,
+        })
+      end
+
+      context 'config_file_template =>' do
+        context 'mcelog/mcelog.conf.erb' do
+          let(:params) {{ :config_file_template => 'mcelog/mcelog.conf.erb' }}
+
+          it do
+            should contain_file('mcelog.conf').with({
+              :ensure  => 'file',
+              :path    => '/etc/mcelog/mcelog.conf',
+              :owner   => 'root',
+              :group   => 'root',
+              :mode    => '0644',
+              :content => /^daemon = yes$/,
+            })
+          end
+        end # mcelog/mcelog.conf.erb
+
+        context 'dne/dne.erb' do
+          let(:params) {{ :config_file_template => 'dne/dne.erb' }}
+
+          it 'should fail' do
+            expect { should contain_class('mcelog::params') }.
+              to raise_error(Puppet::Error, /Could not find template 'dne\/dne.erb'/)
+          end
+        end # dne/dne.erb
+
+        context '[]' do
+          let(:params) {{ :config_file_template => [] }}
+
+          it 'should fail' do
+            expect { should contain_class('mcelog::params') }.
+              to raise_error(Puppet::Error, /is not a string/)
+          end
+        end # []
+      end # config_file_template =>
+    end # EL7.x
+
     context 'unsupport operatingsystemmajrelease' do
       before { facts[:operatingsystemmajrelease] = 4 }
 

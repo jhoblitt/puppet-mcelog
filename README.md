@@ -53,12 +53,36 @@ class { '::mcelog':
 }
 ```
 
+* `package_name`
+
+`String` defaults to: `mcelog`
+
+The name of the package.
+
+* `config_file_path`
+
+`String` defaults to: `/etc/mcelog.conf` on EL5 or `/etc/mcelog/mcelog.conf` on EL6 and EL7
+
+The path of mcelog configuration file.
+
 * `config_file_template`
 
 `String` defaults to: `mcelog/mcelog.conf.erb`
 
 The name of the [ERB] template to use for the generation of the `mcelog.conf`
 file.
+
+* `service_name`
+
+`String` defaults to: `mcelogd` on EL6 or `mcelog` on EL7
+
+The name of the service.
+
+* `service_stdout`
+
+`String` defaults to: `null`
+
+Only for EL7. The value of the StandardOutput parameter in the systemd script.
 
 
 Limitations
@@ -77,6 +101,7 @@ package is likely not avaible on `i386` hosts.
 
 * EL5.x
 * EL6.x
+* EL7.x
 * Fedora 22
 
 ### Puppet Version Compatibility

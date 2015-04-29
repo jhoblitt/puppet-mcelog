@@ -1,5 +1,6 @@
 # mcelog::params
 class mcelog::params {
+
   $package_name         = 'mcelog'
   $config_file_template = 'mcelog/mcelog.conf.erb'
 
@@ -7,25 +8,31 @@ class mcelog::params {
   if $::architecture != 'x86_64' {
     fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystem {
         'Fedora': {
-          $service_name     = 'mcelog'
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
+          $service_name     = 'mcelog'
         }
         default: {
-          $service_name = 'mcelogd'
-
           case $::operatingsystemmajrelease {
             '5': {
               $config_file_path = '/etc/mcelog.conf'
               $service_manage   = false
+              $service_name     = 'mcelogd'
             }
             '6': {
               $config_file_path = '/etc/mcelog/mcelog.conf'
               $service_manage   = true
+              $service_name     = 'mcelogd'
+            }
+            '7': {
+              $config_file_path = '/etc/mcelog/mcelog.conf'
+              $service_manage   = true
+              $service_name     = 'mcelog'
             }
             default: {
               fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
