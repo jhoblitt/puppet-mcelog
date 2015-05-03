@@ -1,7 +1,7 @@
 
 #### [Current]
 
-#### 
+####
  * [25012a4](../../commit/25012a4) - __(Joshua Hoblitt)__ add basic README info
  * [6c1ed79](../../commit/6c1ed79) - __(Joshua Hoblitt)__ add $config_file_template param to mcelog class
  * [dcd23ea](../../commit/dcd23ea) - __(Joshua Hoblitt)__ add support for EL5
