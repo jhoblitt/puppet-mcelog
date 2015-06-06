@@ -12,6 +12,7 @@ Puppet mcelog Module
     * [`mcelog`](#mcelog)
 4. [Limitations](#limitations)
     * [Tested Platforms](#tested-platforms)
+    * [Puppet Version Compatibility](#puppet-version-compatibility)
 5. [Versioning](#versioning)
 6. [Support](#support)
 7. [Contributing](#contributing)
@@ -76,6 +77,14 @@ package is likely not avaible on `i386` hosts.
 
 * EL5.x
 * EL6.x
+
+### Puppet Version Compatibility
+
+Versions | Puppet 2.7 | Puppet 3.x | Puppet 4.x
+:--------|:----------:|:----------:|:----------:
+**0.x**  | **yes**    | **yes**    | no
+**1.x**  | no         | **yes**    | **yes**
+
 
 Versioning
 ----------
