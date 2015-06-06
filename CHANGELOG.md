@@ -1,6 +1,14 @@
 
 #### [Current]
- * [bc014a0](../../commit/bc014a0) - __(Joshua Hoblitt)__ bump version to v1.0.0
+ * [8151d31](../../commit/8151d31) - __(Joshua Hoblitt)__ remove default nodset symlink
+
+To resolve this PMT error:
+    Puppet::ModuleTool::Errors::ModuleToolError: Found symlinks. Symlinks in modules are not allowed, please remove them.
+
+ * [fc9cbf9](../../commit/fc9cbf9) - __(Joshua Hoblitt)__ Merge pull request [#4](../../issues/4) from jhoblitt/feature/v1.0.0
+
+Feature/v1.0.0
+ * [c1fedf2](../../commit/c1fedf2) - __(Joshua Hoblitt)__ bump version to v1.0.0
  * [386a795](../../commit/386a795) - __(Joshua Hoblitt)__ add Puppet Version Compatibility subsection to README
  * [7d426cd](../../commit/7d426cd) - __(Joshua Hoblitt)__ update README boilerplate
  * [da5a186](../../commit/da5a186) - __(Joshua Hoblitt)__ add centos 5.11 nodeset
