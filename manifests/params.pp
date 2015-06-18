@@ -19,6 +19,10 @@ class mcelog::params {
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
         }
+        7: {
+          $config_file_path = '/etc/mcelog/mcelog.conf'
+          $service_manage   = true
+        }
         default: {
           fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
         }
