@@ -9,7 +9,7 @@ describe 'mcelog', :type => :class do
     }}
 
     context 'EL5.x' do
-      before { facts[:operatingsystemmajrelease] = 5 }
+      before { facts[:operatingsystemmajrelease] = '5' }
 
       it { should contain_package('mcelog').with_ensure('present') }
       it do
@@ -26,7 +26,7 @@ describe 'mcelog', :type => :class do
     end # EL5.x
 
     context 'EL6.x' do
-      before { facts[:operatingsystemmajrelease] = 6 }
+      before { facts[:operatingsystemmajrelease] = '6' }
 
       it { should contain_package('mcelog').with_ensure('present') }
       it do
