@@ -1,21 +1,33 @@
 # mcelog::params
 class mcelog::params {
+
   $package_name         = 'mcelog'
-  $service_name         = 'mcelogd'
   $config_file_template = 'mcelog/mcelog.conf.erb'
 
   # MCE is only supported on x86_64
   if $::architecture != 'x86_64' {
     fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {
         '5': {
           $config_file_path = '/etc/mcelog.conf'
           $service_manage   = false
+          $service_name     = 'mcelogd'
         }
         '6': {
+          $config_file_path = '/etc/mcelog/mcelog.conf'
+          $service_manage   = true
+          $service_name     = 'mcelogd'
+        }
+        7: {
+          $config_file_path = '/etc/mcelog/mcelog.conf'
+          $service_manage   = true
+          $service_name     = 'mcelog'
+        }
+        7: {
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
         }
