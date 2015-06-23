@@ -1,5 +1,13 @@
 
 #### [Current]
+ * [bb41779](../../commit/bb41779) - __(Joshua Hoblitt)__ Merge pull request [#7](../../issues/7) from jhoblitt/maint/fix-puppet-4-compat
+
+fix puppet 4 compat - `$::operatingsystemmajrelease` is a string
+ * [5cdd9b2](../../commit/5cdd9b2) - __(Joshua Hoblitt)__ fix puppet 4 compat - `$::operatingsystemmajrelease` is a string
+ * [90d992f](../../commit/90d992f) - __(Joshua Hoblitt)__ Merge pull request [#5](../../issues/5) from jhoblitt/feature/v1.0.1
+
+Feature/v1.0.1
+ * [58aab2b](../../commit/58aab2b) - __(Joshua Hoblitt)__ bump version to v1.0.1
  * [8151d31](../../commit/8151d31) - __(Joshua Hoblitt)__ remove default nodset symlink
 
 To resolve this PMT error:

@@ -1,6 +1,6 @@
 {
   "name": "jhoblitt-mcelog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Joshua Hoblitt <jhoblitt@cpan.org>",
   "summary": "Manages the `mcelog` utility for x86-64 CPU Machine Check Exception data",
   "license": "Apache-2.0",
