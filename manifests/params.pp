@@ -9,13 +9,13 @@ class mcelog::params {
     fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
   case $::osfamily {
-    'redhat': {
+    'RedHat': {
       case $::operatingsystemmajrelease {
-        5: {
+        '5': {
           $config_file_path = '/etc/mcelog.conf'
           $service_manage   = false
         }
-        6: {
+        '6': {
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
         }
