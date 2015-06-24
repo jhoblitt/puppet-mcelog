@@ -1,5 +1,7 @@
 
 #### [Current]
+ * [9f70832](../../commit/9f70832) - __(Joshua Hoblitt)__ fix fedora systemd service name
+ * [dadf2da](../../commit/dadf2da) - __(Joshua Hoblitt)__ bump version to v1.1.0
  * [16332c6](../../commit/16332c6) - __(Joshua Hoblitt)__ Merge pull request [#8](../../issues/8) from jhoblitt/feature/fedora-support
 
 fedora support
