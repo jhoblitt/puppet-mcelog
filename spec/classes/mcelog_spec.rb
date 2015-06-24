@@ -93,6 +93,20 @@ describe 'mcelog', :type => :class do
           to raise_error(Puppet::Error, /not supported on operatingsystemmajrelease: 4/)
       end
     end # EL4.x
+
+    context 'Fedora' do
+      before do
+        facts[:operatingsystem] = 'Fedora'
+        facts[:operatingsystemmajrelease] = '22'
+      end
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :path    => '/etc/mcelog/mcelog.conf',
+        })
+      end
+    end # Fedora
   end # osfamily RedHat
 
   context 'unsupported architecture' do
