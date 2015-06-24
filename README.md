@@ -77,6 +77,7 @@ package is likely not avaible on `i386` hosts.
 
 * EL5.x
 * EL6.x
+* Fedora 22
 
 ### Puppet Version Compatibility
 
