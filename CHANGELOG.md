@@ -1,5 +1,10 @@
 
 #### [Current]
+ * [16332c6](../../commit/16332c6) - __(Joshua Hoblitt)__ Merge pull request [#8](../../issues/8) from jhoblitt/feature/fedora-support
+
+fedora support
+ * [2bb4489](../../commit/2bb4489) - __(Joshua Hoblitt)__ add fedora support
+ * [518c5b8](../../commit/518c5b8) - __(Joshua Hoblitt)__ bump version to 1.0.2
  * [bb41779](../../commit/bb41779) - __(Joshua Hoblitt)__ Merge pull request [#7](../../issues/7) from jhoblitt/maint/fix-puppet-4-compat
 
 fix puppet 4 compat - `$::operatingsystemmajrelease` is a string
