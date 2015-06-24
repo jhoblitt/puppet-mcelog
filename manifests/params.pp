@@ -1,7 +1,6 @@
 # mcelog::params
 class mcelog::params {
   $package_name         = 'mcelog'
-  $service_name         = 'mcelogd'
   $config_file_template = 'mcelog/mcelog.conf.erb'
 
   # MCE is only supported on x86_64
@@ -12,10 +11,13 @@ class mcelog::params {
     'RedHat': {
       case $::operatingsystem {
         'Fedora': {
+          $service_name     = 'mcelog'
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
         }
         default: {
+          $service_name = 'mcelogd'
+
           case $::operatingsystemmajrelease {
             '5': {
               $config_file_path = '/etc/mcelog.conf'
