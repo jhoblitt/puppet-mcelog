@@ -1,5 +1,8 @@
 
 #### [Current]
+ * [68aa1db](../../commit/68aa1db) - __(Joshua Hoblitt)__ add Fedora to metadata.json operatingsystem_support
+ * [9634898](../../commit/9634898) - __(Joshua Hoblitt)__ add Fedora 22 to tested platforms list
+ * [1885add](../../commit/1885add) - __(Joshua Hoblitt)__ bump version to v1.1.1
  * [9f70832](../../commit/9f70832) - __(Joshua Hoblitt)__ fix fedora systemd service name
  * [dadf2da](../../commit/dadf2da) - __(Joshua Hoblitt)__ bump version to v1.1.0
  * [16332c6](../../commit/16332c6) - __(Joshua Hoblitt)__ Merge pull request [#8](../../issues/8) from jhoblitt/feature/fedora-support
