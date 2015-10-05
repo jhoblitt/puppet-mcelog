@@ -43,7 +43,7 @@ class mcelog::params {
     }
     'Debian': {
       case $::operatingsystemmajrelease {
-        '6', '7': {
+        '6', '7', '12.04', '14.04': {
           $config_file_path = '/etc/mcelog/mcelog.conf'
           $service_manage   = true
           $service_name     = 'mcelog'
