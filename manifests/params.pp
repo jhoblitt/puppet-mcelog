@@ -5,7 +5,7 @@ class mcelog::params {
   $config_file_template = 'mcelog/mcelog.conf.erb'
 
   # MCE is only supported on x86_64
-  if $::architecture != 'x86_64' {
+  if ($::architecture != 'x86_64') and ($::architecture != 'amd64') {
     fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
 
@@ -38,6 +38,18 @@ class mcelog::params {
               fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
             }
           }
+        }
+      }
+    }
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        '6', '7': {
+          $config_file_path = '/etc/mcelog/mcelog.conf'
+          $service_manage   = true
+          $service_name     = 'mcelog'
+        }
+        default: {
+          fail("Module ${module_name} is not supported on operatingsystemmajrelease: ${::operatingsystemmajrelease}")
         }
       }
     }

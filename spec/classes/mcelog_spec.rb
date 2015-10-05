@@ -192,6 +192,49 @@ describe 'mcelog', :type => :class do
     end # Fedora
   end # osfamily RedHat
 
+###
+  context 'osfamily Debian' do
+    let(:facts) {{
+      :architecture => 'amd64',
+      :osfamily     => 'Debian',
+    }}
+
+    context 'Debian6' do
+      before { facts[:operatingsystemmajrelease] = '6' }
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :ensure  => 'file',
+          :path    => '/etc/mcelog/mcelog.conf',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :content => /^daemon = yes$/,
+        })
+      end
+      it { should contain_service('mcelog') }
+    end # Debian6
+
+    context 'Debian6' do
+      before { facts[:operatingsystemmajrelease] = '7' }
+
+      it { should contain_package('mcelog').with_ensure('present') }
+      it do
+        should contain_file('mcelog.conf').with({
+          :ensure  => 'file',
+          :path    => '/etc/mcelog/mcelog.conf',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :content => /^daemon = yes$/,
+        })
+      end
+      it { should contain_service('mcelog') }
+    end # Debian7
+  end # osfamily Debian
+
+
   context 'unsupported architecture' do
     let :facts do
       {
