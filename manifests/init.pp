@@ -27,7 +27,7 @@ class mcelog (
   }
 
   if $mcelog::params::service_manage {
-    if $::operatingsystemmajrelease == '7' {
+    if $::osfamily == 'Redhat' and $::operatingsystemmajrelease == '7' {
       file { 'mcelog.service':
         ensure  => 'file',
         path    => '/usr/lib/systemd/system/mcelog.service',
