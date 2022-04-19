@@ -1,27 +1,29 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-describe 'mcelog', :type => :class do
+describe 'mcelog', type: :class do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }
 
-      it { should contain_package('mcelog').with_ensure('present') }
+      it { is_expected.to contain_package('mcelog').with_ensure('present') }
+
       it do
-        should contain_file('mcelog.conf').with({
-          :ensure  => 'file',
-          :path    => '/etc/mcelog/mcelog.conf',
-          :owner   => 'root',
-          :group   => 'root',
-          :mode    => '0644',
-          :content => /^daemon = yes$/,
-        })
+        is_expected.to contain_file('mcelog.conf').with(
+          ensure: 'file',
+          path: '/etc/mcelog/mcelog.conf',
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: %r{^daemon = yes$},
+        )
       end
 
       it do
-        is_expected.to contain_systemd__unit_file("mcelog.service").with(
+        is_expected.to contain_systemd__unit_file('mcelog.service').with(
           content: %r{StandardOutput=syslog},
-        ).that_comes_before("Service[mcelog]")
-        .that_requires("Package[mcelog]")
+        ).that_comes_before('Service[mcelog]').that_requires('Package[mcelog]')
       end
 
       it do
@@ -29,22 +31,22 @@ describe 'mcelog', :type => :class do
           ensure: 'running',
           enable: true,
           name: 'mcelog',
-        ).that_subscribes_to("File[mcelog.conf]")
+        ).that_subscribes_to('File[mcelog.conf]')
       end
 
-      context 'config_file_template =>' do
-        context 'mcelog/mcelog.conf.erb' do
-          let(:params) {{ :config_file_template => 'mcelog/mcelog.conf.erb' }}
+      context 'with config_file_template =>' do
+        context 'with mcelog/mcelog.conf.erb' do
+          let(:params) { { config_file_template: 'mcelog/mcelog.conf.erb' } }
 
           it do
-            should contain_file('mcelog.conf').with({
-              :ensure  => 'file',
-              :path    => '/etc/mcelog/mcelog.conf',
-              :owner   => 'root',
-              :group   => 'root',
-              :mode    => '0644',
-              :content => /^daemon = yes$/,
-            })
+            is_expected.to contain_file('mcelog.conf').with(
+              ensure: 'file',
+              path: '/etc/mcelog/mcelog.conf',
+              owner: 'root',
+              group: 'root',
+              mode: '0644',
+              content: %r{^daemon = yes$},
+            )
           end
         end # mcelog/mcelog.conf.erb
       end # config_file_template =>

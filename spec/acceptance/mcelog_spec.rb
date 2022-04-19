@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'mcelog class' do
@@ -6,46 +8,46 @@ describe 'mcelog class' do
   maj = fact_on 'master', 'operatingsystemmajrelease'
 
   describe 'running puppet code' do
-    pp = <<-EOS
+    pp = <<-PP
       class { 'mcelog': }
-    EOS
+    PP
 
     it 'applies the manifest twice with no stderr' do
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe package(package_name) do
-    it { should be_installed }
+    it { is_expected.to be_installed }
   end
 
   case maj.to_i
   when 5
     describe service(service_name) do
-      it { should_not be_running }
-      it { should_not be_enabled }
+      it { is_expected.not_to be_running }
+      it { is_expected.not_to be_enabled }
     end
 
     describe file('/etc/mcelog.conf') do
-      it { should be_file }
+      it { is_expected.to be_file }
     end
 
     describe file('/etc/mcelog/mcelog.conf') do
-      it { should_not exist }
+      it { is_expected.not_to exist }
     end
   when 6
     describe service(service_name) do
-      it { should be_running }
-      it { should be_enabled(3) }
+      it { is_expected.to be_running }
+      it { is_expected.to be_enabled(3) }
     end
 
     describe file('/etc/mcelog.conf') do
-      it { should_not exist }
+      it { is_expected.not_to exist }
     end
 
     describe file('/etc/mcelog/mcelog.conf') do
-      it { should be_file }
+      it { is_expected.to be_file }
     end
   end
 end
