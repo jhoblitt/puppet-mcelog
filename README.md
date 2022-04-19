@@ -65,13 +65,6 @@ This module is extremely basic. A few obvious improvements would be to:
 Please note that MCE is only avaiable on `x86_64`. It /can not/ work and the
 package is likely not avaible on `i386` hosts.
 
-### Tested Platforms
-
-* EL5.x
-* EL6.x
-* EL7.x
-* Fedora 22
-
 ### Puppet Version Compatibility
 
 Versions | Puppet 2.7 | Puppet 3.x | Puppet 4.x
