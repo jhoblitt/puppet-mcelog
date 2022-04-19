@@ -5,35 +5,36 @@
 #   The name of the package.
 # @param config_file_path
 #   The path of mcelog configuration file.
-# @param config_file_template
-#   The name of the [ERB] template to use for the generation of the `mcelog.conf` file.
 # @param service_name
 #   The name of the service.
+# @param config_file_content
+#   Literal string to write to config_file_path.
 #
 class mcelog (
   String $package_name,
   Stdlib::Absolutepath $config_file_path,
-  String $config_file_template,
   String $service_name,
+  Optional[String] $config_file_content = undef,
 ) {
-  package { $package_name:
-    ensure => present,
-  }
+  ensure_packages($package_name)
 
-  file { 'mcelog.conf':
-    ensure  => 'file',
-    path    => $config_file_path,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template($config_file_template),
-    require => Package[$package_name],
+  if $config_file_content {
+    file { 'mcelog.conf':
+      ensure  => 'file',
+      path    => $config_file_path,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => $config_file_content,
+      require => Package[$package_name],
+      notify  => Service['mcelog'],
+    }
   }
 
   service { 'mcelog':
-    ensure    => running,
-    enable    => true,
-    name      => $service_name,
-    subscribe => File['mcelog.conf'],
+    ensure  => running,
+    enable  => true,
+    name    => $service_name,
+    require => Package[$package_name],
   }
 }

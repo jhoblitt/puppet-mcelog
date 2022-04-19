@@ -7,43 +7,39 @@ describe 'mcelog', type: :class do
     context "on #{os}" do
       let(:facts) { facts }
 
-      it { is_expected.to contain_package('mcelog').with_ensure('present') }
+      context 'with default params' do
+        it { is_expected.to contain_package('mcelog') }
+        it { is_expected.not_to contain_file('mcelog.conf') }
 
-      it do
-        is_expected.to contain_file('mcelog.conf').with(
-          ensure: 'file',
-          path: '/etc/mcelog/mcelog.conf',
-          owner: 'root',
-          group: 'root',
-          mode: '0644',
-          content: %r{^daemon = yes$},
-        )
+        it do
+          is_expected.to contain_service('mcelog').with(
+            ensure: 'running',
+            enable: true,
+            name: 'mcelog',
+          ).that_requires('Package[mcelog]')
+        end
       end
 
-      it do
-        is_expected.to contain_service('mcelog').with(
-          ensure: 'running',
-          enable: true,
-          name: 'mcelog',
-        ).that_subscribes_to('File[mcelog.conf]')
+      context 'with config_file_content param' do
+        let(:params) do
+          {
+            config_file_content: 'foo',
+          }
+        end
+
+        it { is_expected.to contain_package('mcelog') }
+
+        it do
+          is_expected.to contain_file('mcelog.conf').with(
+            ensure: 'file',
+            path: '/etc/mcelog/mcelog.conf',
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+            content: %r{^foo$},
+          ).that_requires('Package[mcelog]').that_notifies('Service[mcelog]')
+        end
       end
-
-      context 'with config_file_template =>' do
-        context 'with mcelog/mcelog.conf.erb' do
-          let(:params) { { config_file_template: 'mcelog/mcelog.conf.erb' } }
-
-          it do
-            is_expected.to contain_file('mcelog.conf').with(
-              ensure: 'file',
-              path: '/etc/mcelog/mcelog.conf',
-              owner: 'root',
-              group: 'root',
-              mode: '0644',
-              content: %r{^daemon = yes$},
-            )
-          end
-        end # mcelog/mcelog.conf.erb
-      end # config_file_template =>
     end
   end
 end
