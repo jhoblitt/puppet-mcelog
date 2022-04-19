@@ -3,4 +3,4 @@ mcelog::package_name: mcelog
 mcelog::config_file_template: mcelog/mcelog.conf.erb
 mcelog::config_file_path: /etc/mcelog/mcelog.conf
 mcelog::service_name: mcelog
-mcelog::service_stdout: "null"
+mcelog::service_stdout: syslog

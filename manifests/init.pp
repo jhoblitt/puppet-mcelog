@@ -33,29 +33,14 @@ class mcelog (
     require => Package[$package_name],
   }
 
-  if $facts['os']['family'] == 'Redhat' and $facts['os']['release']['major'] == '7' {
-    file { 'mcelog.service':
-      ensure  => 'file',
-      path    => '/usr/lib/systemd/system/mcelog.service',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template('mcelog/mcelog.service.erb'),
-      notify  => Exec['systemd_reload'],
-      require => Package[$package_name],
-    }
-    exec { 'systemd_reload':
-      command     => '/usr/bin/systemctl daemon-reload',
-      notify      => Service['mcelog'],
-      refreshonly => true,
-    }
+  systemd::unit_file { 'mcelog.service':
+    content => epp('mcelog/mcelog.service.epp', { standard_output => $service_stdout }),
+    require => Package[$package_name],
   }
-  service { 'mcelog':
-    ensure     => running,
-    enable     => true,
-    name       => $service_name,
-    hasstatus  => true,
-    hasrestart => true,
-    subscribe  => File['mcelog.conf'],
+  ~> service { 'mcelog':
+    ensure    => running,
+    enable    => true,
+    name      => $service_name,
+    subscribe => File['mcelog.conf'],
   }
 }

@@ -1,3 +1,4 @@
+<%- | String $standard_output | -%>
 [Unit]
 Description=Machine Check Exception Logging Daemon
 After=syslog.target
@@ -12,7 +13,8 @@ After=syslog.target
 Type=forking
 ExecStartPre=/etc/mcelog/mcelog.setup
 ExecStart=/usr/sbin/mcelog --ignorenodev --daemon --syslog
-StandardOutput=<%= @service_stdout %>
+SuccessExitStatus=0 15
+StandardOutput=<%= $standard_output %>
 
 [Install]
 WantedBy=multi-user.target
