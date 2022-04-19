@@ -9,15 +9,12 @@
 #   The name of the [ERB] template to use for the generation of the `mcelog.conf` file.
 # @param service_name
 #   The name of the service.
-# @param service_stdout
-#   Only for EL7. The value of the StandardOutput parameter in the systemd script.
 #
 class mcelog (
   String $package_name,
   Stdlib::Absolutepath $config_file_path,
   String $config_file_template,
   String $service_name,
-  String $service_stdout,
 ) {
   package { $package_name:
     ensure => present,
@@ -33,11 +30,7 @@ class mcelog (
     require => Package[$package_name],
   }
 
-  systemd::unit_file { 'mcelog.service':
-    content => epp('mcelog/mcelog.service.epp', { standard_output => $service_stdout }),
-    require => Package[$package_name],
-  }
-  ~> service { 'mcelog':
+  service { 'mcelog':
     ensure    => running,
     enable    => true,
     name      => $service_name,

@@ -21,12 +21,6 @@ describe 'mcelog', type: :class do
       end
 
       it do
-        is_expected.to contain_systemd__unit_file('mcelog.service').with(
-          content: %r{StandardOutput=syslog},
-        ).that_comes_before('Service[mcelog]').that_requires('Package[mcelog]')
-      end
-
-      it do
         is_expected.to contain_service('mcelog').with(
           ensure: 'running',
           enable: true,
