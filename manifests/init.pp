@@ -13,12 +13,12 @@
 #   Only for EL7. The value of the StandardOutput parameter in the systemd script.
 #
 class mcelog (
-  String $package_name                   = $mcelog::params::package_name,
-  Stdlib::Absolutepath $config_file_path = $mcelog::params::config_file_path,
-  String $config_file_template           = $mcelog::params::config_file_template,
-  String $service_name                   = $mcelog::params::service_name,
-  String $service_stdout                 = 'null',
-) inherits mcelog::params {
+  String $package_name,
+  Stdlib::Absolutepath $config_file_path,
+  String $config_file_template,
+  String $service_name,
+  String $service_stdout,
+) {
   package { $package_name:
     ensure => present,
   }
@@ -33,31 +33,29 @@ class mcelog (
     require => Package[$package_name],
   }
 
-  if $mcelog::params::service_manage {
-    if $facts['os']['family'] == 'Redhat' and $facts['os']['release']['major'] == '7' {
-      file { 'mcelog.service':
-        ensure  => 'file',
-        path    => '/usr/lib/systemd/system/mcelog.service',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => template('mcelog/mcelog.service.erb'),
-        notify  => Exec['systemd_reload'],
-        require => Package[$package_name],
-      }
-      exec { 'systemd_reload':
-        command     => '/usr/bin/systemctl daemon-reload',
-        notify      => Service['mcelog'],
-        refreshonly => true,
-      }
+  if $facts['os']['family'] == 'Redhat' and $facts['os']['release']['major'] == '7' {
+    file { 'mcelog.service':
+      ensure  => 'file',
+      path    => '/usr/lib/systemd/system/mcelog.service',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('mcelog/mcelog.service.erb'),
+      notify  => Exec['systemd_reload'],
+      require => Package[$package_name],
     }
-    service { 'mcelog':
-      ensure     => running,
-      enable     => true,
-      name       => $service_name,
-      hasstatus  => true,
-      hasrestart => true,
-      subscribe  => File['mcelog.conf'],
+    exec { 'systemd_reload':
+      command     => '/usr/bin/systemctl daemon-reload',
+      notify      => Service['mcelog'],
+      refreshonly => true,
     }
+  }
+  service { 'mcelog':
+    ensure     => running,
+    enable     => true,
+    name       => $service_name,
+    hasstatus  => true,
+    hasrestart => true,
+    subscribe  => File['mcelog.conf'],
   }
 }
