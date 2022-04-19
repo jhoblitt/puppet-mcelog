@@ -1,7 +1,7 @@
 {
   "name": "jhoblitt-mcelog",
   "version": "2.0.0",
-  "author": "Joshua Hoblitt <jhoblitt@cpan.org>",
+  "author": "Joshua Hoblitt <josh@hoblitt.com>",
   "summary": "Manages the `mcelog` utility for x86-64 CPU Machine Check Exception data",
   "license": "Apache-2.0",
   "source": "https://github.com/jhoblitt/puppet-mcelog.git",
