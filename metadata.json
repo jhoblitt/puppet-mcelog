@@ -60,5 +60,11 @@
       "name": "puppet/systemd",
       "version_requirement": ">= 3.0.0 < 4.0.0"
     }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 6.0.0 < 8.0.0"
+    }
   ]
 }
