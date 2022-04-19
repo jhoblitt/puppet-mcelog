@@ -7,6 +7,7 @@
 1. [Usage](#usage)
   * [Simple](#simple)
   * [`mcelog`](#mcelog)
+1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations](#limitations)
   * [Tested Platforms](#tested-platforms)
   * [Puppet Version Compatibility](#puppet-version-compatibility)
@@ -44,6 +45,10 @@ class { '::mcelog':
   config_file_template => 'mcelog/mcelog.conf.erb',
 }
 ```
+
+## Reference
+
+See [REFERENCE](REFERENCE.md).
 
 ## Limitations
 
