@@ -21,6 +21,8 @@ The following parameters are available in the `mcelog` class:
 * [`package_name`](#package_name)
 * [`config_file_path`](#config_file_path)
 * [`service_name`](#service_name)
+* [`service_ensure`](#service_ensure)
+* [`service_enable`](#service_enable)
 * [`config_file_content`](#config_file_content)
 
 ##### <a name="package_name"></a>`package_name`
@@ -40,6 +42,18 @@ The path of mcelog configuration file.
 Data type: `String`
 
 The name of the service.
+
+##### <a name="service_ensure"></a>`service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+The expected state of the service
+
+##### <a name="service_enable"></a>`service_enable`
+
+Data type: `Boolean`
+
+Should the service start on boot?
 
 ##### <a name="config_file_content"></a>`config_file_content`
 
