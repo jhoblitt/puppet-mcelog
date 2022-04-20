@@ -9,11 +9,8 @@
     * [`mcelog`](#mcelog)
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations](#limitations)
-    * [Tested Platforms](#tested-platforms)
-    * [Puppet Version Compatibility](#puppet-version-compatibility)
 1. [Versioning](#versioning)
 1. [Support](#support)
-1. [Contributing](#contributing)
 1. [See Also](#see-also)
 
 ## Overview
@@ -56,10 +53,10 @@ This module is extremely basic. A few obvious improvements would be to:
 
 * provide more configuration options; specifically enable/disable mce events being sent to syslog
 * logrotated setup of the mcelog log file
-* provide support for running mcelog as a daemon on EL5.x
 
 Please note that MCE is only avaiable on `x86_64`. It /can not/ work and the
-package is likely not avaible on `i386` hosts.
+package is likely not avaible on `i386` hosts.  `mcelog` has been removed from
+Debian >= 10 and replaced by `rasdaemon`.
 
 ## Versioning
 
