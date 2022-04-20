@@ -1,40 +1,33 @@
-Puppet mcelog Module
-====================
+# Puppet mcelog Module
 
-[![Build Status](https://travis-ci.org/jhoblitt/puppet-mcelog.png)](https://travis-ci.org/jhoblitt/puppet-mcelog)
-
-#### Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
-2. [Description](#description)
-3. [Usage](#usage)
-    * [Simple](#simple)
-    * [`mcelog`](#mcelog)
-4. [Limitations](#limitations)
-    * [Tested Platforms](#tested-platforms)
-    * [Puppet Version Compatibility](#puppet-version-compatibility)
-5. [Versioning](#versioning)
-6. [Support](#support)
-7. [Contributing](#contributing)
-8. [See Also](#see-also)
+1. [Description](#description)
+1. [Usage](#usage)
+  * [Simple](#simple)
+  * [`mcelog`](#mcelog)
+1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+1. [Limitations](#limitations)
+  * [Tested Platforms](#tested-platforms)
+  * [Puppet Version Compatibility](#puppet-version-compatibility)
+1. [Versioning](#versioning)
+1. [Support](#support)
+1. [Contributing](#contributing)
+1. [See Also](#see-also)
 
-
-Overview
---------
+## Overview
 
 Manages the `mcelog` utility for x86-64 CPU Machine Check Exception data
 
-
-Description
------------
+## Description
 
 This is a puppet module for the installation and configuration of the
 [`mcelog`](http://www.mcelog.org/) utility.  Which can be used either from the
 cli or run as a daemon that extracts and decodes [Machine Check Exception
 (MCE)](https://en.wikipedia.org/wiki/Machine-check_exception) data.
 
-Usage
------
+## Usage
 
 ### Simple
 
@@ -53,40 +46,11 @@ class { '::mcelog':
 }
 ```
 
-* `package_name`
+## Reference
 
-`String` defaults to: `mcelog`
+See [REFERENCE](REFERENCE.md).
 
-The name of the package.
-
-* `config_file_path`
-
-`String` defaults to: `/etc/mcelog.conf` on EL5 or `/etc/mcelog/mcelog.conf` on EL6 and EL7
-
-The path of mcelog configuration file.
-
-* `config_file_template`
-
-`String` defaults to: `mcelog/mcelog.conf.erb`
-
-The name of the [ERB] template to use for the generation of the `mcelog.conf`
-file.
-
-* `service_name`
-
-`String` defaults to: `mcelogd` on EL6 or `mcelog` on EL7
-
-The name of the service.
-
-* `service_stdout`
-
-`String` defaults to: `null`
-
-Only for EL7. The value of the StandardOutput parameter in the systemd script.
-
-
-Limitations
------------
+## Limitations
 
 This module is extremely basic. A few obvious improvements would be to:
 
@@ -97,57 +61,35 @@ This module is extremely basic. A few obvious improvements would be to:
 Please note that MCE is only avaiable on `x86_64`. It /can not/ work and the
 package is likely not avaible on `i386` hosts.
 
-### Tested Platforms
-
-* EL5.x
-* EL6.x
-* EL7.x
-* Fedora 22
-
-### Puppet Version Compatibility
-
-Versions | Puppet 2.7 | Puppet 3.x | Puppet 4.x
-:--------|:----------:|:----------:|:----------:
-**0.x**  | **yes**    | **yes**    | no
-**1.x**  | no         | **yes**    | **yes**
-
-
-Versioning
-----------
+## Versioning
 
 This module is versioned according to the [Semantic Versioning
 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
 
-
-Support
--------
+## Support
 
 Please log tickets and issues at
 [github](https://github.com/jhoblitt/puppet-mcelog/issues)
 
-
-Contributing
-------------
+## Contributing
 
 1. Fork it on github
-2. Make a local clone of your fork
-3. Create a topic branch.  Eg, `feature/mousetrap`
-4. Make/commit changes
-    * Commit messages should be in [imperative tense](http://git-scm.com/book/ch5-2.html)
-    * Check that linter warnings or errors are not introduced - `bundle exec rake lint`
-    * Check that `Rspec-puppet` unit tests are not broken and coverage is added for new
-      features - `bundle exec rake spec`
-    * Documentation of API/features is updated as appropriate in the README
-    * If present, `beaker` acceptance tests should be run and potentially
-      updated - `bundle exec rake beaker`
-5. When the feature is complete, rebase / squash the branch history as
+1. Make a local clone of your fork
+1. Create a topic branch.  Eg, `feature/mousetrap`
+1. Make/commit changes
+  * Commit messages should be in [imperative tense](http://git-scm.com/book/ch5-2.html)
+  * Check that linter warnings or errors are not introduced - `bundle exec rake lint`
+  * Check that `Rspec-puppet` unit tests are not broken and coverage is added for new
+    features - `bundle exec rake spec`
+  * Documentation of API/features is updated as appropriate in the README
+  * If present, `beaker` acceptance tests should be run and potentially
+    updated - `bundle exec rake beaker`
+1. When the feature is complete, rebase / squash the branch history as
    necessary to remove "fix typo", "oops", "whitespace" and other trivial commits
-6. Push the topic branch to github
-7. Open a Pull Request (PR) from the *topic branch* onto parent repo's `master` branch
+1. Push the topic branch to github
+1. Open a Pull Request (PR) from the *topic branch* onto parent repo's `master` branch
 
-
-See Also
---------
+## See Also
 
 * [mcelog](http://www.mcelog.org/)
 * [Machine Check Exception (MCE)](https://en.wikipedia.org/wiki/Machine-check_exception)
