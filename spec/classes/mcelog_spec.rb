@@ -20,6 +20,26 @@ describe 'mcelog', type: :class do
         end
       end
 
+      context 'with service disabled' do
+        let(:params) do
+          {
+            service_ensure: 'stopped',
+            service_enable: false,
+          }
+        end
+
+        it { is_expected.to contain_package('mcelog') }
+        it { is_expected.not_to contain_file('mcelog.conf') }
+
+        it do
+          is_expected.to contain_service('mcelog').with(
+            ensure: 'stopped',
+            enable: false,
+            name: 'mcelog',
+          ).that_requires('Package[mcelog]')
+        end
+      end
+
       context 'with config_file_content param' do
         let(:params) do
           {
