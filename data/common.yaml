@@ -2,3 +2,5 @@
 mcelog::package_name: mcelog
 mcelog::config_file_path: /etc/mcelog/mcelog.conf
 mcelog::service_name: mcelog
+mcelog::service_ensure: running
+mcelog::service_enable: true
